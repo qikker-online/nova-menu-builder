@@ -1,15 +1,21 @@
 {
-  "name": "optimistdigital/nova-menu-builder",
+  "name": "qikker-online/nova-menu-builder",
   "description": "Menu Builder Tool for Laravel Nova.",
   "keywords": [
     "laravel",
     "nova",
     "menu",
     "builder",
-    "optimistdigital"
+    "optimistdigital",
+    "qikker"
   ],
   "license": "MIT",
   "authors": [
+    {
+      "name": "Qikker Online",
+      "email": "marijn@qikkeronline.nl",
+      "role": "Maintainer"
+    },
     {
       "name": "Tarvo Reinpalu",
       "email": "tarvoreinpalu@gmail.com",
@@ -23,11 +29,11 @@
   ],
   "require": {
     "php": ">=7.1.0",
-    "optimistdigital/nova-locale-field": "^2.0.0"
+    "spatie/laravel-translatable": "^4.2"
   },
   "autoload": {
     "psr-4": {
-      "OptimistDigital\\MenuBuilder\\": "src/"
+      "QikkerOnline\\MenuBuilder\\": "src/"
     },
     "files": [
       "src/helpers.php"
@@ -36,7 +42,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "OptimistDigital\\MenuBuilder\\MenuBuilderServiceProvider"
+        "QikkerOnline\\MenuBuilder\\MenuBuilderServiceProvider"
       ]
     }
   },
