@@ -68,7 +68,7 @@ abstract class MenuItemBase
 
         return [
             'menu_id' => "required|exists:$menusTableName,id",
-            'name' => 'required',
+            'name' => 'required|array',
             'class' => 'required',
             'target' => 'required|in:_self,_blank',
             'value' => 'required'

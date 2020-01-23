@@ -4,9 +4,16 @@ namespace QikkerOnline\NovaMenuBuilder\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use QikkerOnline\NovaMenuBuilder\NovaMenuBuilder;
+use Spatie\Translatable\HasTranslations;
 
 class MenuItem extends Model
 {
+    use HasTranslations;
+
+    public $translatable = [
+        'name'
+    ];
+
     protected $fillable = ['menu_id', 'name', 'value', 'class', 'parameters', 'target', 'parent_id', 'order', 'enabled'];
 
     protected $with = ['children'];

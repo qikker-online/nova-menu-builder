@@ -16,7 +16,7 @@
           <menu-builder-arrow-icon :wrapperClass="`${isCascadeOpen(item) && 'btn-cascade-open'}`" />
         </button>
 
-        <div :class="`text-90 ${!item.enabled ? 'opacity-25' : ''}`">{{ item.name }}</div>
+        <div :class="`text-90 ${!item.enabled ? 'opacity-25' : ''}`">{{ item.name ? item.name[Object.keys(locales)[0]] : ''}}</div>
         <div :class="`font-lighter text-80 ml-4 text-sm ${!item.enabled ? 'opacity-25' : ''}`">
           {{ item.displayValue }}
         </div>
@@ -59,6 +59,7 @@ export default {
       type: Array,
       required: true,
     },
+    locales: {}
   },
 
   components: {

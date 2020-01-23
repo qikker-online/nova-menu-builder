@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use QikkerOnline\NovaMenuBuilder\Http\Requests\NewMenuItemRequest;
 use QikkerOnline\NovaMenuBuilder\Models\Menu;
 use QikkerOnline\NovaMenuBuilder\Models\MenuItem;
+use QikkerOnline\NovaMenuBuilder\NovaMenuBuilder;
 
 class MenuController extends Controller
 {
@@ -125,7 +126,7 @@ class MenuController extends Controller
     public function getLinkTypes($locale)
     {
         $linkTypes = [];
-        $models = MenuBuilder::getModels();
+        $models = NovaMenuBuilder::getModels();
 
         foreach ($models as $linkClass) {
             if (!class_exists($linkClass)) continue;

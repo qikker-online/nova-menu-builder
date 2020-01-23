@@ -2,6 +2,7 @@
   <div class="py-3">
     <menu-builder-header @addNewMenuItem="addNewMenuItem" />
     <menu-builder
+      :locales="locales"
       v-model="menuItems"
       @duplicateMenuItem="duplicateMenuItem"
       @saveMenuLocalState="saveMenuLocalState"
@@ -15,6 +16,7 @@
       :newItem="newItem"
       :showModal="modalItem !== false"
       :update="update"
+      :locales="locales"
       :linkType="linkType"
       :linkTypes="linkTypes"
       @updateItem="updateItem"
@@ -54,7 +56,7 @@ export default {
     update: false,
     linkType: '',
     newItem: {
-      name: null,
+      name: {},
       value: '',
       target: '_self',
       parameters: '',
@@ -64,6 +66,7 @@ export default {
       classProp: [],
     },
     menuItems: [],
+    locales: [],
     linkTypes: void 0,
   }),
   computed: {
@@ -123,6 +126,8 @@ export default {
     async getData() {
       const menuItems = (await api.getItems(this.resourceId)).data;
       this.menuItems = this.setMenuItemProperties(_.values(menuItems), this.getMenuLocalState());
+      this.locales = this.$attrs.panel.fields[0].locales;
+
       this.linkTypes = _.values((await api.getLinkTypes(this.$attrs.panel.fields[0].locale)).data);
     },
 
@@ -174,7 +179,7 @@ export default {
 
     resetNewItem() {
       this.newItem = {
-        name: null,
+        name: {},
         value: '',
         target: '_self',
         parameters: '',
@@ -203,6 +208,7 @@ export default {
     },
 
     updateItem() {
+      console.log('update item');
       if (this.newItem.parameters && !this.isValidJSON(this.newItem.parameters)) {
         this.$toasted.show('Invalid JSON in parameters field.', { type: 'error' });
         return;

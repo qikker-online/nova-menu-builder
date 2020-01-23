@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
+use QikkerOnline\NovaMenuBuilder\BuilderResourceTool;
 use QikkerOnline\NovaMenuBuilder\Http\Resources\Helpers\Translatable;
 use QikkerOnline\NovaMenuBuilder\Models\Menu;
 use QikkerOnline\NovaMenuBuilder\NovaMenuBuilder;
@@ -34,6 +35,7 @@ class MenuResource extends Resource
 
         return [
             Translatable::make('Translations', $translatableFields, $locales, $request),
+            BuilderResourceTool::make()->withMeta(['locales' => $locales]),
         ];
 
 //        if (MenuBuilder::hasNovaLang()) {
@@ -50,7 +52,6 @@ class MenuResource extends Resource
 //            $fields[] = Text::make('Locale', 'locale')->exceptOnForms();
 //        }
 //
-//        $fields[] = BuilderResourceTool::make()->withMeta(['locale' => $resourceLocale]);
     }
 
     public static function label()
