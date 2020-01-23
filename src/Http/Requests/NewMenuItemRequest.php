@@ -1,10 +1,9 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Http\Requests;
+namespace QikkerOnline\NovaMenuBuilder\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use OptimistDigital\MenuBuilder\MenuBuilder;
-use OptimistDigital\MenuBuilder\Classes\MenuItemText;
+use QikkerOnline\NovaMenuBuilder\NovaMenuBuilder;
 
 class NewMenuItemRequest extends FormRequest
 {
@@ -15,7 +14,7 @@ class NewMenuItemRequest extends FormRequest
      */
     public function authorize()
     {
-        return resolve(MenuBuilder::class)->authorize(request()) ? true : false;
+        return resolve(NovaMenuBuilder::class)->authorize(request()) ? true : false;
     }
 
     /**

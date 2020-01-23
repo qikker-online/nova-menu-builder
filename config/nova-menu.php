@@ -1,5 +1,7 @@
 <?php
 
+use QikkerOnline\NovaMenuBuilder\Http\Resources\MenuResource;
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -9,7 +11,7 @@ return [
     | Optionally override the original Menu resource.
     */
 
-    'resource' => OptimistDigital\MenuBuilder\Http\Resources\MenuResource::class,
+    'resource' => MenuResource::class,
 
 
     /*

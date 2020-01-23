@@ -1,10 +1,9 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Models;
+namespace QikkerOnline\NovaMenuBuilder\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use OptimistDigital\MenuBuilder\MenuBuilder;
-use OptimistDigital\MenuBuilder\Models\Menu;
+use QikkerOnline\NovaMenuBuilder\NovaMenuBuilder;
 
 class MenuItem extends Model
 {
@@ -22,7 +21,7 @@ class MenuItem extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->setTable(MenuBuilder::getMenuItemsTableName());
+        $this->setTable(NovaMenuBuilder::getMenuItemsTableName());
     }
 
     public function menu()

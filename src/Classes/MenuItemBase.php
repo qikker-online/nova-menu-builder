@@ -1,8 +1,9 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Classes;
+namespace QikkerOnline\NovaMenuBuilder\Classes;
 
-use OptimistDigital\MenuBuilder\MenuBuilder;
+
+use QikkerOnline\NovaMenuBuilder\NovaMenuBuilder;
 
 abstract class MenuItemBase
 {
@@ -54,7 +55,7 @@ abstract class MenuItemBase
      *
      * @param string $value The key from options list that was selected.
      * @param array $parameters The JSON parameters added to the item.
-     * @return any
+     * @return mixed
      **/
     public static function getValue($value = null, array $parameters = null)
     {
@@ -63,7 +64,7 @@ abstract class MenuItemBase
 
     public static function getRules(): array
     {
-        $menusTableName = MenuBuilder::getMenusTableName();
+        $menusTableName = NovaMenuBuilder::getMenusTableName();
 
         return [
             'menu_id' => "required|exists:$menusTableName,id",

@@ -1,56 +1,56 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Http\Resources;
+namespace QikkerOnline\NovaMenuBuilder\Http\Resources;
 
+use Eminiarts\Tabs\TabsOnEdit;
 use Illuminate\Http\Request;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use OptimistDigital\MenuBuilder\BuilderResourceTool;
-use OptimistDigital\MenuBuilder\Models\Menu;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
-use OptimistDigital\MenuBuilder\MenuBuilder;
-use OptimistDigital\NovaLocaleField\LocaleField;
+use QikkerOnline\NovaMenuBuilder\Http\Resources\Helpers\Translatable;
+use QikkerOnline\NovaMenuBuilder\Models\Menu;
+use QikkerOnline\NovaMenuBuilder\NovaMenuBuilder;
 
 class MenuResource extends Resource
 {
+    use TabsOnEdit;
+
     public static $model = Menu::class;
     public static $search = ['name', 'slug'];
     public static $displayInNavigation = false;
 
     public function fields(Request $request)
     {
-        $menusTableName = MenuBuilder::getMenusTableName();
-        $resourceLocale = static::$model::whereId($request->route('resourceId'))->value('locale');
-        $locales = MenuBuilder::getLocales();
-        $hasManyDifferentLocales = Menu::select('locale')->distinct()->get()->count() > 1;
+        $menusTableName = NovaMenuBuilder::getMenusTableName();
+        $locales = NovaMenuBuilder::getLocales();
 
-        $fields = [
+        $translatableFields = [
             Text::make(__('Name'), 'name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+                ->sortable(),
 
             Text::make(__('Slug'), 'slug')
-                ->sortable()
-                ->creationRules('required', 'max:255', "unique:$menusTableName,slug,NULL,id,locale,{$request->get('locale')}")
-                ->updateRules('required', 'max:255', "unique:$menusTableName,slug,{{resourceId}},id,locale,{$request->get('locale')}"),
+                ->sortable(),
         ];
 
-        if (MenuBuilder::hasNovaLang()) {
-            $fields[] = \OptimistDigital\NovaLang\NovaLangField\NovaLangField::make('Locale', 'locale', 'locale_parent_id')->onlyOnForms();
-        } else {
-            $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')->locales($locales)->onlyOnForms();
-        }
+        return [
+            Translatable::make('Translations', $translatableFields, $locales, $request),
+        ];
 
-        if (count($locales) > 1) {
-            $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')
-                ->locales($locales)
-                ->exceptOnForms();
-        } else if ($hasManyDifferentLocales) {
-            $fields[] = Text::make('Locale', 'locale')->exceptOnForms();
-        }
+//        if (MenuBuilder::hasNovaLang()) {
+//            $fields[] = \OptimistDigital\NovaLang\NovaLangField\NovaLangField::make('Locale', 'locale', 'locale_parent_id')->onlyOnForms();
+//        } else {
+//            $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')->locales($locales)->onlyOnForms();
+//        }
 
-        $fields[] = BuilderResourceTool::make()->withMeta(['locale' => $resourceLocale]);
-        return $fields;
+//        if (count($locales) > 1) {
+//            $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')
+//                ->locales($locales)
+//                ->exceptOnForms();
+//        } else if ($hasManyDifferentLocales) {
+//            $fields[] = Text::make('Locale', 'locale')->exceptOnForms();
+//        }
+//
+//        $fields[] = BuilderResourceTool::make()->withMeta(['locale' => $resourceLocale]);
     }
 
     public static function label()
@@ -70,14 +70,14 @@ class MenuResource extends Resource
 
     public function title()
     {
-        return $this->name . ' (' . $this->slug . ')';
+        return $this->name.' ('.$this->slug.')';
     }
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if (MenuBuilder::hasNovaLang()) {
-            $query->where(MenuBuilder::getMenusTableName() . '.locale', nova_lang_get_active_locale());
-        }
+//        if (NovaMenuBuilder::hasNovaLang()) {
+//            $query->where(NovaMenuBuilder::getMenusTableName().'.locale', nova_lang_get_active_locale());
+//        }
         return $query;
     }
 }

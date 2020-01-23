@@ -1,15 +1,18 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder;
+namespace QikkerOnline\NovaMenuBuilder;
 
+use Illuminate\View\View;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
+use QikkerOnline\NovaMenuBuilder\Classes\MenuItemStaticURL;
+use QikkerOnline\NovaMenuBuilder\Classes\MenuItemText;
 
-class MenuBuilder extends Tool
+class NovaMenuBuilder extends Tool
 {
     protected static $defaultLinkableModels = [
-        \OptimistDigital\MenuBuilder\Classes\MenuItemStaticURL::class,
-        \OptimistDigital\MenuBuilder\Classes\MenuItemText::class,
+        MenuItemStaticURL::class,
+        MenuItemText::class,
     ];
 
     /**
@@ -19,14 +22,14 @@ class MenuBuilder extends Tool
      */
     public function boot()
     {
-        Nova::script('nova-menu', __DIR__ . '/../dist/js/tool.js');
-        Nova::style('nova-menu', __DIR__ . '/../dist/css/tool.css');
+        Nova::script('nova-menu', __DIR__.'/../dist/js/tool.js');
+        Nova::style('nova-menu', __DIR__.'/../dist/css/tool.css');
     }
 
     /**
      * Build the view that renders the navigation links for the tool.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function renderNavigation()
     {
@@ -51,18 +54,13 @@ class MenuBuilder extends Tool
         );
     }
 
-    public static function hasNovaLang()
-    {
-        return class_exists('\OptimistDigital\NovaLang\NovaLang');
-    }
-
     public static function getMenusTableName()
     {
-        return config('nova-menu.menus_table_name', 'nova_menu_menus');
+        return config('nova-menu.menus_table_name', 'qo_menu_menus');
     }
 
     public static function getMenuItemsTableName()
     {
-        return config('nova-menu.menu_items_table_name', 'nova_menu_menu_items');
+        return config('nova-menu.menu_items_table_name', 'qo_menu_menu_items');
     }
 }

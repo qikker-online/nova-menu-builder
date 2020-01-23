@@ -1,6 +1,6 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Classes;
+namespace QikkerOnline\NovaMenuBuilder\Classes;
 
 abstract class MenuLinkable extends MenuItemBase
 {

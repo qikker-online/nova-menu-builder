@@ -29,11 +29,12 @@
   ],
   "require": {
     "php": ">=7.1.0",
-    "spatie/laravel-translatable": "^4.2"
+    "spatie/laravel-translatable": "^4.2",
+    "eminiarts/nova-tabs": "^1.2"
   },
   "autoload": {
     "psr-4": {
-      "QikkerOnline\\MenuBuilder\\": "src/"
+      "QikkerOnline\\NovaMenuBuilder\\": "src/"
     },
     "files": [
       "src/helpers.php"
@@ -42,7 +43,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "QikkerOnline\\MenuBuilder\\MenuBuilderServiceProvider"
+        "QikkerOnline\\NovaMenuBuilder\\NovaMenuBuilderServiceProvider"
       ]
     }
   },

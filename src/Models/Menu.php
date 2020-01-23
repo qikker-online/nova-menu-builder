@@ -1,17 +1,24 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Models;
+namespace QikkerOnline\NovaMenuBuilder\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use OptimistDigital\MenuBuilder\MenuBuilder;
-use OptimistDigital\MenuBuilder\Models\MenuItem;
+use QikkerOnline\NovaMenuBuilder\NovaMenuBuilder;
+use Spatie\Translatable\HasTranslations;
 
 class Menu extends Model
 {
+    use HasTranslations;
+
+    public $translatable = [
+        'name',
+        'slug'
+    ];
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->setTable(MenuBuilder::getMenusTableName());
+        $this->setTable(NovaMenuBuilder::getMenusTableName());
     }
 
     public function rootMenuItems()

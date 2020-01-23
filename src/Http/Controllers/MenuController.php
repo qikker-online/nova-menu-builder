@@ -1,27 +1,31 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Http\Controllers;
+namespace QikkerOnline\NovaMenuBuilder\Http\Controllers;
 
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-use OptimistDigital\MenuBuilder\Models\Menu;
-use OptimistDigital\MenuBuilder\Models\MenuItem;
-use OptimistDigital\MenuBuilder\Http\Requests\NewMenuItemRequest;
-use OptimistDigital\MenuBuilder\MenuBuilder;
+use QikkerOnline\NovaMenuBuilder\Http\Requests\NewMenuItemRequest;
+use QikkerOnline\NovaMenuBuilder\Models\Menu;
+use QikkerOnline\NovaMenuBuilder\Models\MenuItem;
 
 class MenuController extends Controller
 {
     /**
      * Return root menu items for one menu.
      *
-     * @param Illuminate\Http\Request $request
-     * @param OptimistDigital\MenuBuilder\Models\Menu $menu
-     * @return Illuminate\Http\Response
-     **/
+     * @param Request $request
+     * @param Menu    $menu
+     *
+     * @return JsonResponse
+     */
     public function getMenuItems(Request $request, Menu $menu)
     {
-        if (empty($menu)) return response()->json(['menu' => 'menu_not_found'], 400);
+        if (empty($menu)) {
+            return response()->json(['menu' => 'menu_not_found'], 400);
+        }
 
         $menuItems = $menu->rootMenuItems->filter(function ($item) {
             return class_exists($item->class);
@@ -33,10 +37,11 @@ class MenuController extends Controller
     /**
      * Save menu items.
      *
-     * @param Illuminate\Http\Request $request
-     * @param OptimistDigital\MenuBuilder\Models\Menu $menu
-     * @return Illuminate\Http\Response
-     **/
+     * @param Request $request
+     * @param Menu    $menu
+     *
+     * @return JsonResponse
+     */
     public function saveMenuItems(Request $request, Menu $menu)
     {
         $items = $request->get('menuItems');
@@ -53,9 +58,10 @@ class MenuController extends Controller
     /**
      * Creates new MenuItem.
      *
-     * @param OptimistDigital\MenuBuilder\Http\Requests\NewMenuItemRequest $request
-     * @return Illuminate\Http\Response
-     **/
+     * @param NewMenuItemRequest $request
+     *
+     * @return JsonResponse
+     */
     public function createMenuItem(NewMenuItemRequest $request)
     {
         $data = $request->all();
@@ -67,23 +73,25 @@ class MenuController extends Controller
     /**
      * Returns the menu item as JSON.
      *
-     * @param OptimistDigital\MenuBuilder\Models\MenuItem $menuItem
-     * @return Illuminate\Http\Response
+     * @param MenuItem $menuItem
+     *
+     * @return JsonResponse
      **/
     public function getMenuItem(MenuItem $menuItem)
     {
         return isset($menuItem)
             ? response()->json($menuItem, 200)
-            : resonse()->json(['error' => 'item_not_found'], 400);
+            : response()->json(['error' => 'item_not_found'], 400);
     }
 
     /**
      * Updates a MenuItem.
      *
-     * @param OptimistDigital\MenuBuilder\Http\Requests\NewMenuItemRequest $request
-     * @param OptimistDigital\MenuBuilder\Models\MenuItem $menuItem
-     * @return Illuminate\Http\Response
-     **/
+     * @param NewMenuItemRequest $request
+     * @param MenuItem           $menuItem
+     *
+     * @return JsonResponse
+     */
     public function updateMenuItem(NewMenuItemRequest $request, MenuItem $menuItem)
     {
         if (!isset($menuItem)) return response()->json(['error' => 'menu_item_not_found'], 400);
@@ -95,9 +103,11 @@ class MenuController extends Controller
     /**
      * Deletes a MenuItem.
      *
-     * @param OptimistDigital\MenuBuilder\Models\MenuItem $menuItem
-     * @return Illuminate\Http\Response
-     **/
+     * @param MenuItem $menuItem
+     *
+     * @return JsonResponse
+     * @throws Exception
+     */
     public function deleteMenuItem(MenuItem $menuItem)
     {
         $menuItem->children()->delete();
@@ -109,7 +119,8 @@ class MenuController extends Controller
      * Get link types for locale.
      *
      * @param string $locale
-     * @return Illuminate\Http\Response
+     *
+     * @return JsonResponse
      **/
     public function getLinkTypes($locale)
     {
@@ -120,8 +131,8 @@ class MenuController extends Controller
             if (!class_exists($linkClass)) continue;
 
             $data = [
-                'name' => $linkClass::getName(),
-                'type' => $linkClass::getType(),
+                'name'  => $linkClass::getName(),
+                'type'  => $linkClass::getType(),
                 'class' => $linkClass,
             ];
 
@@ -138,9 +149,10 @@ class MenuController extends Controller
     /**
      * Duplicates a MenuItem.
      *
-     * @param OptimistDigital\MenuBuilder\Models\MenuItem $menuItem
-     * @return Illuminate\Http\Response
-     **/
+     * @param MenuItem $menuItem
+     *
+     * @return JsonResponse
+     */
     public function duplicateMenuItem(MenuItem $menuItem)
     {
         if (empty($menuItem)) return response()->json(['error' => 'menu_item_not_found'], 400);

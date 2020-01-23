@@ -1,5 +1,5 @@
 @php
-use OptimistDigital\MenuBuilder\Http\Resources\MenuResource;
+use QikkerOnline\NovaMenuBuilder\Http\Resources\MenuResource;
 @endphp
 @if (MenuResource::authorizedToViewAny(request()))
 <router-link tag="h3" :to="{name: 'nova-menu'}"

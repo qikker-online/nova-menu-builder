@@ -1,6 +1,6 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder;
+namespace QikkerOnline\NovaMenuBuilder;
 
 use Laravel\Nova\ResourceTool;
 

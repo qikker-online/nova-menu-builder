@@ -1,15 +1,14 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder;
+namespace QikkerOnline\NovaMenuBuilder;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use OptimistDigital\MenuBuilder\Http\Middleware\Authorize;
-use OptimistDigital\MenuBuilder\Http\Resources\MenuResource;
-use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
+use QikkerOnline\NovaMenuBuilder\Http\Middleware\Authorize;
+use QikkerOnline\NovaMenuBuilder\Http\Resources\MenuResource;
 
-class MenuBuilderServiceProvider extends ServiceProvider
+class NovaMenuBuilderServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
@@ -19,10 +18,10 @@ class MenuBuilderServiceProvider extends ServiceProvider
     public function boot()
     {
         // Load views
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-menu');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'nova-menu');
 
         // Load migrations
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         $this->app->booted(function () {
             $this->routes();
@@ -47,9 +46,9 @@ class MenuBuilderServiceProvider extends ServiceProvider
         if ($this->app->routesAreCached()) return;
 
         Route::middleware(['nova', Authorize::class])
-            ->namespace('OptimistDigital\MenuBuilder\Http\Controllers')
+            ->namespace('QikkerOnline\NovaMenuBuilder\Http\Controllers')
             ->prefix('nova-vendor/nova-menu')
-            ->group(__DIR__ . '/../routes/api.php');
+            ->group(__DIR__.'/../routes/api.php');
     }
 
     /**
@@ -58,7 +57,7 @@ class MenuBuilderServiceProvider extends ServiceProvider
     private function publishMigrations()
     {
         $this->publishes([
-            __DIR__ . '/../database/migrations' => database_path('migrations'),
+            __DIR__.'/../database/migrations' => database_path('migrations'),
         ], 'nova-menu-builder-migrations');
     }
 
@@ -68,7 +67,7 @@ class MenuBuilderServiceProvider extends ServiceProvider
     private function publishViews()
     {
         $this->publishes([
-            __DIR__ . '/../resources/views/' => resource_path('views/vendor/nova-menu'),
+            __DIR__.'/../resources/views/' => resource_path('views/vendor/nova-menu'),
         ], 'nova-menu-builder-views');
     }
 
@@ -78,7 +77,7 @@ class MenuBuilderServiceProvider extends ServiceProvider
     private function publishConfig()
     {
         $this->publishes([
-            __DIR__ . '/../config/' => config_path(),
+            __DIR__.'/../config/' => config_path(),
         ], 'nova-menu-builder-config');
     }
 }

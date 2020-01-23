@@ -1,6 +1,6 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Classes;
+namespace QikkerOnline\NovaMenuBuilder\Classes;
 
 abstract class MenuItemText extends MenuItemBase
 {

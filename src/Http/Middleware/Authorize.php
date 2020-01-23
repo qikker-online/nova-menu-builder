@@ -1,8 +1,8 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Http\Middleware;
+namespace QikkerOnline\NovaMenuBuilder\Http\Middleware;
 
-use OptimistDigital\MenuBuilder\MenuBuilder;
+use QikkerOnline\NovaMenuBuilder\NovaMenuBuilder;
 
 class Authorize
 {
@@ -15,6 +15,6 @@ class Authorize
      */
     public function handle($request, $next)
     {
-        return resolve(MenuBuilder::class)->authorize($request) ? $next($request) : abort(403);
+        return resolve(NovaMenuBuilder::class)->authorize($request) ? $next($request) : abort(403);
     }
 }
