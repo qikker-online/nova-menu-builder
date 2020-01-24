@@ -208,7 +208,6 @@ export default {
     },
 
     updateItem() {
-      console.log('update item');
       if (this.newItem.parameters && !this.isValidJSON(this.newItem.parameters)) {
         this.$toasted.show('Invalid JSON in parameters field.', { type: 'error' });
         return;

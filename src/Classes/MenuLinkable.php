@@ -19,6 +19,8 @@ abstract class MenuLinkable extends MenuItemBase
      **/
     public static function getOptions($locale): array
     {
-        return [];
+        return [
+            'hallo' => 'doei'
+        ];
     }
 }

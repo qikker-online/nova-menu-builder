@@ -8,13 +8,13 @@
 
       <form autocomplete="off" @submit.prevent="$emit(update ? 'updateItem' : 'confirmItemCreate')">
 
-        <div class="tabs flex flex-row overflow-x-auto">
+        <div class="tabs flex flex-row overflow-x-auto ">
           <button
-            class="py-5 px-8 border-b-2 focus:outline-none tab"
+            class="py-4 px-8 border-b-2 focus:outline-none tab"
             :class="[activeLocaleTab == locale ? 'text-grey-black font-bold border-primary': 'text-grey font-semibold border-40']"
             v-for="(localeName, locale) in locales"
             :key="locale"
-            @click="handleLocaleTabClick(locale, $event)"
+            @click.prevent="handleLocaleTabClick(locale, $event)"
           >{{ localeName }}
           </button>
         </div>
@@ -99,14 +99,14 @@
             </div>
           </div>
         </template>
-<!--        <div class="flex border-b border-40">-->
-<!--          <div class="w-1/5 py-4">-->
-<!--            <label class="inline-block text-80 pt-2 leading-tight">{{ __('Parameters') }}</label>-->
-<!--          </div>-->
-<!--          <div class="py-4 w-4/5">-->
-<!--            <codemirror v-model="newItem.parameters" :options="cmOptions" :placeholder="cmPlaceholder"></codemirror>-->
-<!--          </div>-->
-<!--        </div>-->
+        <div class="flex border-b border-40">
+          <div class="w-1/5 py-4">
+            <label class="inline-block text-80 pt-2 leading-tight">{{ __('Parameters') }}</label>
+          </div>
+          <div class="py-4 w-4/5">
+            <codemirror v-model="newItem.parameters" :options="cmOptions" :placeholder="cmPlaceholder"></codemirror>
+          </div>
+        </div>
         <div class="flex border-b border-40" v-if="linkType.type && linkType.type !== 'text'">
           <div class="w-1/5 py-4">
             <label class="inline-block text-80 pt-2 leading-tight">{{ __('Open in') }}</label>
@@ -143,22 +143,21 @@
 </template>
 <script>
   import Modal from './Modal';
-  // import {codemirror} from 'vue-codemirror';
-  //
-  // import 'codemirror/addon/display/placeholder.js';
-  // import 'codemirror/lib/codemirror.css';
-  // import 'codemirror/theme/dracula.css';
-  // import 'codemirror/mode/javascript/javascript';
+  import {codemirror} from 'vue-codemirror';
+
+  import 'codemirror/addon/display/placeholder.js';
+  import 'codemirror/lib/codemirror.css';
+  import 'codemirror/theme/dracula.css';
+  import 'codemirror/mode/javascript/javascript';
 
   export default {
     props: ['newItem', 'showModal', 'update', 'linkType', 'linkTypes', 'locales'],
     components: {
       Modal,
-     // codemirror,
+      codemirror,
     },
     data: () => ({
       activeLocaleTab: null,
-
       toggleLabels: false,
       switchColor: {},
       cmOptions: {
