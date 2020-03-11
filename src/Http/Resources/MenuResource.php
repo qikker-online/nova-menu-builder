@@ -37,21 +37,6 @@ class MenuResource extends Resource
             Translatable::make('Translations', $translatableFields, $locales, $request),
             BuilderResourceTool::make()->withMeta(['locales' => $locales]),
         ];
-
-//        if (MenuBuilder::hasNovaLang()) {
-//            $fields[] = \OptimistDigital\NovaLang\NovaLangField\NovaLangField::make('Locale', 'locale', 'locale_parent_id')->onlyOnForms();
-//        } else {
-//            $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')->locales($locales)->onlyOnForms();
-//        }
-
-//        if (count($locales) > 1) {
-//            $fields[] = LocaleField::make('Locale', 'locale', 'locale_parent_id')
-//                ->locales($locales)
-//                ->exceptOnForms();
-//        } else if ($hasManyDifferentLocales) {
-//            $fields[] = Text::make('Locale', 'locale')->exceptOnForms();
-//        }
-//
     }
 
     public static function label()
