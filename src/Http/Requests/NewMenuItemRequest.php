@@ -17,6 +17,13 @@ class NewMenuItemRequest extends FormRequest
         return resolve(NovaMenuBuilder::class)->authorize(request()) ? true : false;
     }
 
+    public function messages()
+    {
+        return [
+            'class.required' => 'The type field is required.',
+        ];
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,6 +31,11 @@ class NewMenuItemRequest extends FormRequest
      */
     public function rules()
     {
-        return $this->get('class')::getRules();
+        return array_merge(
+            [
+                'class' => 'required',
+            ],
+            $this->get('class') ? $this->get('class')::getRules() : []
+        );
     }
 }

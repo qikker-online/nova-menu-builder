@@ -40333,7 +40333,7 @@ var render = function() {
                         "button",
                         {
                           staticClass:
-                            "appearance-none cursor-pointer text-70 hover:text-primary flex pl-4 pr-4",
+                            "appearance-none cursor-pointer text-70 hover:text-primary flex pl-4 pr-4 pt-4",
                           attrs: { title: "Edit" },
                           on: {
                             click: function($event) {

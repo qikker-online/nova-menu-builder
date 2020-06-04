@@ -11,7 +11,7 @@
           v-if="hasChildren(item)"
           @click="toggleMenuChildrenCascade(item)"
           title="Edit"
-          class="appearance-none cursor-pointer text-70 hover:text-primary flex pl-4 pr-4"
+          class="appearance-none cursor-pointer text-70 hover:text-primary flex pl-4 pr-4 pt-4"
         >
           <menu-builder-arrow-icon :wrapperClass="`${isCascadeOpen(item) && 'btn-cascade-open'}`" />
         </button>
